@@ -1,0 +1,98 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+ %matplotlib inline
+
+import seaborn as sns 
+df = pd.read_csv("D:/dsbda/covid_vaccine_statewise.csv")
+
+ df 
+df.shape
+
+df.columns 
+
+
+ df.dtypes 
+
+ df.info()
+
+df.isnull().sum() 
+
+#Handling Missing Values 
+df.fillna(value=0, inplace=True) 
+
+ df.head(10) 
+
+ df.isnull().sum() 
+
+ #Data formatting and Data Transformation 
+df ["Total Doses Administered"] = df[ 'Total Doses Administered' ].astype('int64') 
+df["Sessions"] = df['Sessions'].astype('int64') 
+df['First Dose Administered'] = df['First Dose Administered' ].astype('int64') 
+df['Second Dose Administered'] = df['Second Dose Administered'].astype('int64')  
+df['Male (Doses Administered)']= df['Male (Doses Administered)'].astype('int64') 
+
+df["Female (Doses Administered)"]= df['Female (Doses Administered)'].astype('int64')
+
+df['Transgender (Doses Administered)'] = df['Transgender (Doses Administered)'].astype('int64')
+df[' Covaxin (Doses Administered)']= df[" Covaxin (Doses Administered)"].astype('int64')
+
+df['CoviShield (Doses Administered)'] = df['CoviShield (Doses Administered)'].astype('int64') 
+df['Sputnik V (Doses Administered)'] = df['Sputnik V (Doses Administered)'].astype('int64') 
+
+df['AEFI'] = df['AEFI'].astype('int64')
+
+df['18-44 Years (Doses Administered)'] = df['18-44 Years (Doses Administered)'].astype('int64')
+
+ df['45-60 Years (Doses Administered)']= df['45-60 Years (Doses Administered)'].astype('int64')
+
+ 
+df['45-60 Years(Individuals Vaccinated)'] = df['45-60 Years(Individuals Vaccinated)'].astype('int64')
+df['60+ Years(Individuals Vaccinated)'] = df['60+ Years(Individuals Vaccinated)'].astype('int64')
+
+df['Male(Individuals Vaccinated)'] = df['Male(Individuals Vaccinated)'].astype('int64') 
+df['Female(Individuals Vaccinated)'] = df['Female(Individuals Vaccinated)'].astype('int64') 
+df['Transgender(Individuals Vaccinated)'] = df['Transgender(Individuals Vaccinated)'].astype('int64') 
+df['Total Individuals Vaccinated'] = df['Total Individuals Vaccinated'].astype('int64')
+
+date = df['Updated On'].str.split('/', expand=True) 
+date 
+df.rename(columns={'Updated On': 'Vaccine_date'}, inplace=True)
+
+df.rename(columns={'Updated On': 'Vaccine_date'}, inplace=True)
+
+df['Vaccine_date']
+
+
+df['day'] = date[0] 
+df['month'] = date[1] 
+df['year'] = date[2]
+
+
+df['day'] = pd.to_numeric(df['day']) 
+df['month'] = pd.to_numeric(df['month']) 
+df['year'] = pd.to_numeric(df['year']) 
+
+
+print(df.columns.tolist())
+
+df['Vaccine_date'] = pd.to_datetime(df['Vaccine_date'])
+
+
+df.head() 
+
+#Total number of Male Vaccinated 
+number_of_males_vaccinated = df['Male(Individuals Vaccinated)'].sum() 
+print("Total Number of Males Vaccinated : ", number_of_males_vaccinated) 
+
+ #Numbner of Females Vaccinated 
+number_of_females_vaccinated = df['Female(Individuals Vaccinated)'].sum() 
+print("Total Number of Females Vaccinated : ", number_of_females_vaccinated) 
+
+plt.pie([number_of_males_vaccinated, number_of_females_vaccinated], labels=['Males', 'Females'], autopct='%1.1f%%', startangle=90)
+plt.legend(loc='best', shadow=True, fontsize=11)
+plt.title('Percentage of Males and Females Vaccinated in India')
+plt.axis('equal')
+plt.show()
+ 
